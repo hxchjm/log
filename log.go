@@ -9,7 +9,7 @@ import (
 	"strconv"
 
 	//"go-common/library/stat/metric"
-	"gitee.com/hxchjm/log/env"
+	"github.com/hxchjm/log/env"
 )
 
 // Config log config.

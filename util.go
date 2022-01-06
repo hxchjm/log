@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"time"
 
-	"gitee.com/hxchjm/log/core"
-	"gitee.com/hxchjm/log/env"
+	"github.com/hxchjm/log/core"
+	"github.com/hxchjm/log/env"
 	//"go-common/library/net/metadata"
 	//"go-common/library/net/trace"
 )

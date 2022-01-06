@@ -10,7 +10,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"gitee.com/hxchjm/log/filerotate"
+	"github.com/hxchjm/log/filerotate"
 )
 
 // FileWriter create file log writer

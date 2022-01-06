@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"gitee.com/hxchjm/log/filewriter"
+	"github.com/hxchjm/log/filewriter"
 )
 
 // level idx

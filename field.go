@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	"gitee.com/hxchjm/log/core"
+	"github.com/hxchjm/log/core"
 )
 
 // D represents a map of entry level data used for structured logging.
