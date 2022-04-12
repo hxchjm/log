@@ -20,7 +20,7 @@ func NewStdout() *StdoutHandler {
 	return &StdoutHandler{render: newPatternRender(defaultPattern)}
 }
 
-// Log stdout loging, only for developing env.
+// Log stdout logging, only for developing env.
 func (h *StdoutHandler) Log(ctx context.Context, lv Level, args ...D) {
 	d := toMap(args...)
 	// add extra fields

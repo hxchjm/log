@@ -79,7 +79,7 @@ var (
 	_agentDSN string
 	//_filter   logFilter
 	//_module   = verboseModule{}
-	_noagent  bool
+	_noagent bool
 )
 
 // addFlag init log from dsn.
@@ -144,33 +144,58 @@ func Init(conf *Config) {
 }
 
 // Info logs a message at the info log level.
-func Info(format string, args ...interface{}) {
-	h.Log(context.Background(), _infoLevel, KVString(_log, fmt.Sprintf(format, args...)))
+func Info(args ...interface{}) {
+	if ctx, ok := args[0].(context.Context); ok {
+		h.Log(ctx, _infoLevel, KVString(_log, fmt.Sprint(args[1:]...)))
+		return
+	}
+	h.Log(context.Background(), _infoLevel, KVString(_log, fmt.Sprint(args...)))
+
 }
 
 // Warn logs a message at the warning log level.
-func Warn(format string, args ...interface{}) {
-	h.Log(context.Background(), _warnLevel, KVString(_log, fmt.Sprintf(format, args...)))
+func Warn(args ...interface{}) {
+	if ctx, ok := args[0].(context.Context); ok {
+		h.Log(ctx, _warnLevel, KVString(_log, fmt.Sprint(args[1:]...)))
+		return
+	}
+	h.Log(context.Background(), _warnLevel, KVString(_log, fmt.Sprint(args...)))
 }
 
 // Error logs a message at the error log level.
-func Error(format string, args ...interface{}) {
-	h.Log(context.Background(), _errorLevel, KVString(_log, fmt.Sprintf(format, args...)))
+func Error(args ...interface{}) {
+	if ctx, ok := args[0].(context.Context); ok {
+		h.Log(ctx, _errorLevel, KVString(_log, fmt.Sprint(args[1:]...)))
+		return
+	}
+	h.Log(context.Background(), _errorLevel, KVString(_log, fmt.Sprint(args...)))
 }
 
-// Infoc logs a message at the info log level.
-func Infoc(ctx context.Context, format string, args ...interface{}) {
-	h.Log(ctx, _infoLevel, KVString(_log, fmt.Sprintf(format, args...)))
+// Infof logs a message at the info log level.
+func Infof(args ...interface{}) {
+	if ctx, ok := args[0].(context.Context); ok {
+		h.Log(ctx, _infoLevel, KVString(_log, fmt.Sprintf(args[1].(string), args[2:]...)))
+		return
+	}
+	h.Log(context.Background(), _infoLevel, KVString(_log, fmt.Sprintf(args[0].(string), args[1:]...)))
 }
 
-// Errorc logs a message at the error log level.
-func Errorc(ctx context.Context, format string, args ...interface{}) {
-	h.Log(ctx, _errorLevel, KVString(_log, fmt.Sprintf(format, args...)))
+// Errorf logs a message at the error log level.
+func Errorf(args ...interface{}) {
+	if ctx, ok := args[0].(context.Context); ok {
+		h.Log(ctx, _errorLevel, KVString(_log, fmt.Sprintf(args[1].(string), args[2:]...)))
+		return
+	}
+	h.Log(context.Background(), _errorLevel, KVString(_log, fmt.Sprintf(args[0].(string), args[1:]...)))
 }
 
-// Warnc logs a message at the warning log level.
-func Warnc(ctx context.Context, format string, args ...interface{}) {
-	h.Log(ctx, _warnLevel, KVString(_log, fmt.Sprintf(format, args...)))
+// Warnf logs a message at the warning log level.
+func Warnf(args ...interface{}) {
+	if ctx, ok := args[0].(context.Context); ok {
+		h.Log(ctx, _warnLevel, KVString(_log, fmt.Sprintf(args[1].(string), args[2:]...)))
+		return
+	}
+	h.Log(context.Background(), _warnLevel, KVString(_log, fmt.Sprintf(args[0].(string), args[1:]...)))
 }
 
 // Infov logs a message at the info log level.
