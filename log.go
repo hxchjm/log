@@ -69,6 +69,7 @@ func init() {
 	}
 	h = newHandlers([]string{}, NewStdout())
 
+	SetFormat("%L %D %T  %s %F %M")
 	addFlag(flag.CommandLine)
 }
 

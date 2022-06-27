@@ -8,7 +8,6 @@ import (
 	"time"
 
 	"github.com/hxchjm/log/core"
-	"github.com/hxchjm/log/env"
 	//"go-common/library/net/metadata"
 	//"go-common/library/net/trace"
 )
@@ -32,15 +31,15 @@ func addExtraField(ctx context.Context, fields map[string]interface{}) {
 	//if color := metadata.String(ctx, metadata.Color); color != "" {
 	//	fields[_color] = color
 	//}
-	if env.Color != "" {
-		fields[_envColor] = env.Color
-	}
+	//if env.Color != "" {
+	//	fields[_envColor] = env.Color
+	//}
 	//if cluster := metadata.String(ctx, metadata.Cluster); cluster != "" {
 	//	fields[_cluster] = cluster
 	//}
-	fields[_deplyEnv] = env.DeployEnv
-	fields[_zone] = env.Zone
-	fields[_appID] = c.Family
+	//fields[_deplyEnv] = env.DeployEnv
+	//fields[_zone] = env.Zone
+	//fields[_appID] = c.Family
 	fields[_instanceID] = c.Host
 	//if metadata.String(ctx, metadata.Mirror) != "" {
 	//	fields[_mirror] = true
