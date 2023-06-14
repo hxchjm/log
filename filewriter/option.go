@@ -6,16 +6,17 @@ import (
 	"time"
 )
 
-// RotateFormat
+// Rotate Format
+
 const (
 	RotateDaily = "2006-01-02"
 )
 
 var defaultOption = option{
-	RotateFormat:   RotateDaily,
-	MaxSize:        1 << 30,
-	ChanSize:       1024 * 8,
-	BufSize:        1024 * 1024, // 1MB
+	RotateFormat: RotateDaily,
+	MaxSize:      1 << 30,
+	ChanSize:     1024 * 8,
+	BufSize:      1024 * 1024, // 1MB
 }
 
 type option struct {
@@ -26,10 +27,10 @@ type option struct {
 	BufSize      int
 
 	// TODO export Option
-	WriteTimeout   time.Duration
+	WriteTimeout time.Duration
 }
 
-// Option filewriter option
+// Option file writer option
 type Option func(opt *option)
 
 // RotateFormat e.g 2006-01-02 meaning rotate log file every day.
@@ -52,7 +53,7 @@ func MaxFile(n int) Option {
 }
 
 // MaxSize set max size for single log file,
-// defult 1GB, 0 meaning unlimit.
+// default 1GB, 0 meaning unlimited.
 func MaxSize(n int64) Option {
 	return func(opt *option) {
 		opt.MaxSize = n

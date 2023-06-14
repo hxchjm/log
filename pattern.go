@@ -20,6 +20,7 @@ var patternMap = map[string]func(map[string]interface{}) string{
 	//"f": keyFactory(_source),
 	"F": funcSource,
 	"i": keyFactory(_instanceID),
+	"a": keyFactory(_appID),
 	"e": keyFactory(_deplyEnv),
 	"z": keyFactory(_zone),
 	"S": longSource,
@@ -65,7 +66,7 @@ type pattern struct {
 	bufPool sync.Pool
 }
 
-// Render implemet Formater
+// Render implement Render
 func (p *pattern) Render(w io.Writer, d map[string]interface{}) error {
 	buf := p.bufPool.Get().(*bytes.Buffer)
 	defer func() {
@@ -80,7 +81,7 @@ func (p *pattern) Render(w io.Writer, d map[string]interface{}) error {
 	return err
 }
 
-// Render implemet Formater as string
+// RenderString implement RenderString
 func (p *pattern) RenderString(d map[string]interface{}) string {
 	// TODO strings.Builder
 	buf := p.bufPool.Get().(*bytes.Buffer)
@@ -113,10 +114,10 @@ func keyFactory(key string) func(map[string]interface{}) string {
 }
 
 func funcSource(map[string]interface{}) string {
-	 pc, _, _, ok := runtime.Caller(5)
-	 if ok {
-		 path := runtime.FuncForPC(pc).Name()
-		 funcName := strings.Split(path, ".")
+	pc, _, _, ok := runtime.Caller(5)
+	if ok {
+		path := runtime.FuncForPC(pc).Name()
+		funcName := strings.Split(path, ".")
 		return funcName[len(funcName)-1]
 	}
 	return "unknown"

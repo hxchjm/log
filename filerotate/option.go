@@ -11,9 +11,9 @@ const (
 )
 
 var defaultOption = option{
-	RotateFormat:   RotateDaily,
-	MaxSize:        1 << 30,
-	BufSize:        4096,
+	RotateFormat: RotateDaily,
+	MaxSize:      1 << 30,
+	BufSize:      4096,
 }
 
 type option struct {
@@ -21,7 +21,6 @@ type option struct {
 	MaxFile      int
 	MaxSize      int64
 	BufSize      int
-
 }
 
 // Option filewriter option

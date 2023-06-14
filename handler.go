@@ -97,7 +97,7 @@ func (hs Handlers) Log(ctx context.Context, lv Level, d ...D) {
 		d = append(d, KVString(_source, fn))
 	}
 	d = append(d, KV(_time, time.Now()), KVInt64(_levelValue, int64(lv)), KVString(_level, lv.String()))
-	for _, h := range hs.handlers {//handlers存储了StdoutHandler和FileHandler.
+	for _, h := range hs.handlers { //handlers存储了StdoutHandler和FileHandler.
 		h.Log(ctx, lv, d...)
 	}
 }

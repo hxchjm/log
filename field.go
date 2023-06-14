@@ -89,6 +89,6 @@ func Bool(value bool) D {
 }
 
 // Raw construct D with interface{} value.
-func Raw(value interface{}) D{
+func Raw(value interface{}) D {
 	return D{Value: value}
 }

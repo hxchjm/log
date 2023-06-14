@@ -12,7 +12,7 @@ import (
 	//"go-common/library/net/trace"
 )
 
-const _ctxkey="trace_id"
+const _ctxkey = "trace_id"
 
 func FromContext(ctx context.Context) (t string, ok bool) {
 	t, ok = ctx.Value(_ctxkey).(string)
@@ -39,7 +39,7 @@ func addExtraField(ctx context.Context, fields map[string]interface{}) {
 	//}
 	//fields[_deplyEnv] = env.DeployEnv
 	//fields[_zone] = env.Zone
-	//fields[_appID] = c.Family
+	fields[_appID] = c.Family
 	fields[_instanceID] = c.Host
 	//if metadata.String(ctx, metadata.Mirror) != "" {
 	//	fields[_mirror] = true
