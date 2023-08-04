@@ -30,7 +30,7 @@ type Config struct {
 	RotateSize int64
 
 	// log-agent
-	//Agent *AgentConfig
+	Agent *AgentConfig
 
 	// V Enable V-leveled logging at the specified level.
 	V int32
@@ -77,10 +77,10 @@ var (
 	_v        int
 	_stdout   bool
 	_dir      string
-	_agentDSN string
+	_agentDSN string //unixgram:///var/run/lancer/collector.sock?timeout=100ms&chan=1024
 	//_filter   logFilter
 	//_module   = verboseModule{}
-	_noagent bool
+	//_noagent bool
 )
 
 // addFlag init log from dsn.
@@ -90,21 +90,21 @@ func addFlag(fs *flag.FlagSet) {
 	}
 	_stdout, _ = strconv.ParseBool(os.Getenv("LOG_STDOUT"))
 	_dir = os.Getenv("LOG_DIR")
-	/*if _agentDSN = os.Getenv("LOG_AGENT"); _agentDSN == "" {
-		_agentDSN = _defaultAgentConfig
-	}*/
+	if _agentDSN = os.Getenv("LOG_AGENT"); _agentDSN == "" {
+		//_agentDSN = _defaultAgentConfig
+	}
 	/*if tm := os.Getenv("LOG_MODULE"); len(tm) > 0 {
 		_module.Set(tm)
 	}*/
 
-	_noagent, _ = strconv.ParseBool(os.Getenv("LOG_NO_AGENT"))
+	//_noagent, _ = strconv.ParseBool(os.Getenv("LOG_NO_AGENT"))
 	// get val from flag
 	fs.IntVar(&_v, "log.v", _v, "log verbose level, or use LOG_V env variable.")
 	fs.BoolVar(&_stdout, "log.stdout", _stdout, "log enable stdout or not, or use LOG_STDOUT env variable.")
 	fs.StringVar(&_dir, "log.dir", _dir, "log file `path, or use LOG_DIR env variable.")
 	fs.StringVar(&_agentDSN, "log.agent", _agentDSN, "log agent dsn, or use LOG_AGENT env variable.")
 	//fs.Var(&_module, "log.module", "log verbose for specified module, or use LOG_MODULE env variable, format: file=1,file2=2.")
-	fs.BoolVar(&_noagent, "log.noagent", _noagent, "force disable log agent print log to stderr,  or use LOG_NO_AGENT")
+	//fs.BoolVar(&_noagent, "log.noagent", _noagent, "force disable log agent print log to stderr,  or use LOG_NO_AGENT")
 }
 
 // Init create logger with context.
@@ -130,7 +130,7 @@ func Init(conf *Config) {
 	}
 	var hs []Handler
 	// when env is dev
-	if conf.Stdout || (isNil && (env.DeployEnv == "" || env.DeployEnv == env.DeployEnvDev)) || _noagent {
+	if conf.Stdout || (isNil && (env.DeployEnv == "" || env.DeployEnv == env.DeployEnvDev)) {
 		hs = append(hs, NewStdout())
 	}
 	if conf.Dir != "" {
@@ -138,8 +138,9 @@ func Init(conf *Config) {
 	}
 	// when env is not dev
 	//if !_noagent && (conf.Agent != nil || (isNil && env.DeployEnv != "" && env.DeployEnv != env.DeployEnvDev)) {
-	//	hs = append(hs, NewAgent(conf.Agent))
-	//}
+	if _agentDSN != "" {
+		hs = append(hs, NewAgent(conf.Agent))
+	}
 	h = newHandlers(conf.Filter, hs...)
 	c = conf
 }
