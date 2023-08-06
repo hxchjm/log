@@ -27,7 +27,7 @@ const (
 	// container ID.
 	_instanceID = "instance_id"
 	// uniq ID from trace.
-	_tid          = "traceid"
+	_tid          = "trace_id"
 	_span         = "spanid"
 	_traceSampled = "trace_s"
 	// request time.
