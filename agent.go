@@ -104,7 +104,7 @@ func NewAgent(ac *AgentConfig) (a *AgentHandler) {
 
 	// set fixed k/v into enc buffer
 	KVString(_appID, c.Family).AddTo(a.enc)
-	//KVString(_deplyEnv, env.DeployEnv).AddTo(a.enc)
+	KVString(_deplyEnv, env.DeployEnv).AddTo(a.enc)
 	KVString(_instanceID, c.Host).AddTo(a.enc)
 	//KVString(_zone, env.Zone).AddTo(a.enc)
 
@@ -145,6 +145,12 @@ func (h *AgentHandler) Log(ctx context.Context, lv Level, args ...D) {
 	f := h.data()
 	for i := range args {
 		f = append(f, args[i])
+	}
+	if t, ok := FromContext(ctx); ok {
+		f = append(f, KVString(_tid, t))
+	}
+	if env.DeployEnv != "" {
+		f = append(f, KVString(_deplyEnv, env.DeployEnv))
 	}
 	//if t, ok := trace.FromContext(ctx); ok {
 	//	f = append(f, KVString(_tid, t.TraceID()), KVString(_span, t.SpanID()))

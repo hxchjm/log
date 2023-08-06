@@ -1,5 +1,8 @@
 package main
 
+//如果希望日志上报到loki并在grafana中显示，移步到README.md
+//go run main.go -log.agent "unixgram:///var/run/log-agent/collector.sock?timeout=100ms&chan=1024"
+
 import (
 	"context"
 	"flag"
