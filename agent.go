@@ -19,6 +19,7 @@ const (
 	_defaultChan         = 2048
 	_defaultSocketBuffer = 200 * 1024 // linux core.net.wmem_default 212992
 	_defaultAgentConfig  = "unixpacket:///var/run/lancer/collector_tcp.sock?timeout=100ms&chan=1024"
+	_defaultAgentPath    = "unixgram:///var/run/log-agent/collector.sock?timeout=100ms&chan=1024?timeout=100ms&chan=1024"
 )
 
 var (
@@ -262,9 +263,9 @@ func (h *AgentHandler) sendBatchBuffer(buf *core.Buffer) {
 // writeproc collect data and write into connection.
 func (h *AgentHandler) writeproc() {
 	var (
-		count       int
-		buf         = core.NewBuffer(h.c.SockWriteBuffer)
-		taskID      = []byte(h.c.TaskID)
+		count int
+		buf   = core.NewBuffer(h.c.SockWriteBuffer)
+		//taskID      = []byte(h.c.TaskID)
 		tick        = time.NewTicker(_mergeWait)
 		channelOpen = true
 	)
@@ -281,8 +282,8 @@ func (h *AgentHandler) writeproc() {
 
 		select {
 		case d := <-h.msgs:
-			_, _ = buf.Write(taskID)
-			_, _ = buf.Write([]byte(strconv.FormatInt(time.Now().UnixNano()/1e6, 10)))
+			//_, _ = buf.Write(taskID)
+			//_, _ = buf.Write([]byte(strconv.FormatInt(time.Now().UnixNano()/1e6, 10)))
 			_ = h.enc.Encode(buf, d...)
 			h.free(d)
 			_, _ = buf.Write(_logSeparator)
@@ -317,7 +318,7 @@ func (h *AgentHandler) SetFormat(string) {
 }
 
 // parseDSN parse log agent dsn.
-// unixgram:///var/run/lancer/collector.sock?timeout=100ms&chan=1024
+// unixgram:///var/run/log-agent/collector.sock?timeout=100ms&chan=1024
 func parseDSN(dsn string) *AgentConfig {
 	u, _ := url.Parse(dsn)
 	v := u.Query()
