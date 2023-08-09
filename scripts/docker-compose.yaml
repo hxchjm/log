@@ -14,7 +14,7 @@ services:
       - loki
 
   log-agent:
-    image: log-agent:latest
+    image: hxchjm/log-agent:latest
     volumes:
       - /var/run/log-agent/:/var/run/log-agent/
     networks:
