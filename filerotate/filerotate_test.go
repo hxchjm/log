@@ -11,7 +11,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/glycerine/goconvey/convey"
+	"github.com/smartystreets/goconvey/convey"
 	"github.com/stretchr/testify/assert"
 )
 
