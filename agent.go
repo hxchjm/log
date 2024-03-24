@@ -32,14 +32,14 @@ var (
 	_mergeWait          = 1 * time.Second
 	_logSeparator       = []byte("\u0001")
 	_logSeparatorLength = len(_logSeparator)
-
-	_defaultTaskIDs = map[string]string{
-		env.DeployEnvFat1:   "000069",
-		env.DeployEnvUat:    "000069",
-		env.DeployEnvAvalon: "000069",
-		env.DeployEnvPre:    "000161",
-		env.DeployEnvProd:   "000161",
-	}
+	/*
+		_defaultTaskIDs = map[string]string{
+			env.DeployEnvFat1:   "000069",
+			env.DeployEnvUat:    "000069",
+			env.DeployEnvAvalon: "000069",
+			env.DeployEnvPre:    "000161",
+			env.DeployEnvProd:   "000161",
+		}*/
 )
 
 // AgentHandler agent struct.
@@ -58,7 +58,7 @@ type AgentHandler struct {
 
 // AgentConfig agent config.
 type AgentConfig struct {
-	TaskID          string
+	//TaskID          string
 	Buffer          int
 	Proto           string        `json:"network"`
 	Addr            string        `json:"address"`
@@ -72,9 +72,9 @@ func NewAgent(ac *AgentConfig) (a *AgentHandler) {
 	if ac == nil {
 		ac = parseDSN(_agentDSN)
 	}
-	if ac.TaskID == "" {
-		ac.TaskID = _defaultTaskIDs[env.DeployEnv]
-	}
+	//if ac.TaskID == "" {
+	//	ac.TaskID = _defaultTaskIDs[env.DeployEnv]
+	//}
 	a = &AgentHandler{
 		c: ac,
 		enc: core.NewJSONEncoder(core.EncoderConfig{
