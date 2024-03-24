@@ -15,7 +15,10 @@ import (
 
 func main() {
 	flag.Parse()
-	log.Init(nil) //需要文件输出，则log.Init必不可少，否则是输出到窗口
+	log.Init(&log.Config{
+		Dir: `C:\Users\hxchj\Desktop\log`},
+
+	) //需要文件输出，则log.Init必不可少，否则是输出到窗口
 	defer log.Close()
 	ctx := context.WithValue(context.Background(), "trace_id", "1234-5678-9986-4324")
 	log.SetFormat("%L %D %T %i %a %S %F %M")

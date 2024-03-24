@@ -41,7 +41,7 @@ type rotateItem struct {
 	fname      string
 }
 
-// parseRotateItem loads existing files
+// parseRotateItem loads existing files，所有现存的备份日志文件进行排序，并返回，主要，info.log日志不在list中
 func parseRotateItem(dir, fname, rotateFormat string) (*list.List, error) {
 	fis, err := ioutil.ReadDir(dir)
 	if err != nil {
