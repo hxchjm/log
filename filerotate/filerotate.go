@@ -151,6 +151,7 @@ func New(fpath string, fns ...Option) (*FileRotate, error) {
 		writer: nil,
 	}
 
+	//创建文件
 	if err := fr.reset(fpath); err != nil {
 		return nil, fmt.Errorf("failed to reset current file to %s: %s", fpath, err)
 	}

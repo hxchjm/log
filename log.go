@@ -112,6 +112,22 @@ func Init(conf *Config) {
 	var isNil bool
 	if conf == nil {
 		isNil = true
+		conf = &Config{}
+	}
+	if conf.Stdout == false {
+		conf.Stdout = _stdout
+	}
+	if conf.Dir == "" {
+		conf.Dir = _dir
+	}
+	if conf.V == 0 {
+		conf.V = int32(_v)
+	}
+	if len(env.AppID) != 0 {
+		conf.Family = env.AppID // for caster
+	}
+	/*if conf == nil {
+		isNil = true
 		conf = &Config{
 			Stdout: _stdout,
 			Dir:    _dir,
@@ -122,7 +138,7 @@ func Init(conf *Config) {
 	}
 	if len(env.AppID) != 0 {
 		conf.Family = env.AppID // for caster
-	}
+	}*/
 	conf.Host = env.Hostname
 	if len(conf.Host) == 0 {
 		host, _ := os.Hostname()
